@@ -1,7 +1,7 @@
 # Hello world kernel module
 
 Hello world module.
-``c
+```c
 #include <linux/init.h>
 #include <linux/module.h>
 MODULE_LICENSE("Dual BSD/GPL");
@@ -19,7 +19,7 @@ static void hello_exit(void)
 
 module_init(hello_init);
 module_exit(hello_exit);
-``
+```
 
 Commands
 `insmod`, `rmmod`, `lsmod`, `modprobe`
@@ -39,18 +39,18 @@ Networking
 
 ## Building and Compiling
 Makefile just need one line
-``
+```
 obj-m := module.o
-``
+```
 Then invoke the make command
-``
+```
 $ make -C /path/to/kernel/source M=`module path` modules
-``
+```
 -C dir, --directory=dir
 Change to directory dir before reading the makefiles or doing anything else.
 
 Wildcard makefile
-``makefile
+```makefile
 obj-m       += hello.o
 KVERSION := $(shell uname -r)
 all:
@@ -58,7 +58,7 @@ all:
 
 clean:
     $(MAKE) -C /lib/modules/$(KVERSION)/build M=$(PWD) clean
-``
+```
 
 ## Concurrency in Kernel
 Linux kernel code, including driver code, must be reentrant: it must be capable of running in more than one context at
@@ -67,28 +67,28 @@ the same time
 ## The Current Process
 Kernel code can refer to the current process by accessing the global item `current`, defined in `<asm/current.h>`, which
 yields a pointer to `struct task_struct`, defined by `<linux/sched.h>`.
-``c
+```c
 printk(KERN_INFO "The process is \"%s\" (pid %i)\n", current->comm, current->pid);
-``
+```
 
 ## Module stacking
 When a module is loaded, any symbol exported by the module becomes part of the kernel symbol table.
-``
+```
 EXPORT_SYMBOL(name);
 EXPORT_SYMBOL_GPL(name);
-``
+```
 
 `msdos` module relies on fat module.
 `modprobe` automatically loads all necessary modules
 
 ## Module parameters
 
-``c
+```c
 static char *whom = "world";
 static int howmany = 1;
 module_param(howmany, int, S_IRUGO);
 module_param(whom, charp, S_IRUGO);
-``
-``shell
+```
+```shell
 insmod hellop howmany=10 whom="Mom"
 ```

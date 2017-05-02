@@ -26,4 +26,9 @@ int main()
 	/* test2(x); // compile error */
 	test2(move(x)); // ok
 	cout << x << endl;
+
+	string y = "fat";
+	string z(move(y)); // move constructor
+	cout << "y: " << y << endl;
+	cout << "z: " << z << endl;
 }

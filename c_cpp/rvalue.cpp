@@ -31,4 +31,8 @@ int main()
 	string z(move(y)); // move constructor
 	cout << "y: " << y << endl;
 	cout << "z: " << z << endl;
+
+	string w = move(z); // move assignment
+	cout << "z: " << z << endl;
+	cout << "w: " << w << endl;
 }
